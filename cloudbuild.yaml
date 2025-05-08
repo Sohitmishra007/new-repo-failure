@@ -1,29 +1,40 @@
 steps:
-  # Build the image
+  # Step 1: Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/my-app:$SHORT_SHA', '.']
+    args: [
+      'build',
+      '-t', 'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/my-app:$SHORT_SHA',
+      '.'
+    ]
 
-  # Push the image
+  # Step 2: Push image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/my-app:$SHORT_SHA']
+    args: [
+      'push',
+      'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/my-app:$SHORT_SHA'
+    ]
 
-  # Render deployment manifest using Skaffold
-  - name: 'gcr.io/k8s-skaffold/skaffold'
-    args: ['render', '--filename=skaffold.yaml', '--output=rendered.yaml']
+  # Step 3: Render Cloud Deploy manifests using Skaffold
+  - name: 'gcr.io/cloud-builders/skaffold'
+    args: [
+      'render',
+      '--filename=skaffold.yaml',
+      '--output=rendered.yaml'
+    ]
 
-  # Deploy using Cloud Deploy
+  # Step 4: Create Cloud Deploy release
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
-    args:
-      - deploy
-      - releases
-      - create
-      - 'release-$BUILD_ID'
-      - '--delivery-pipeline=cloudrun-python-pipeline'
-      - '--region=asia-south1'
-      - '--skaffold-file=skaffold.yaml'
-      - '--source=.'
-      - '--to-target=dev'
+    args: [
+      'deploy',
+      'releases',
+      'create', 'release-$BUILD_ID',
+      '--delivery-pipeline=cloudrun-python-pipeline',
+      '--region=asia-south1',
+      '--skaffold-file=skaffold.yaml',
+      '--source=.',
+      '--to-target=dev'
+    ]
 
 images:
   - 'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/my-app:$SHORT_SHA'
