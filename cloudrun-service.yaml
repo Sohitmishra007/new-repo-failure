@@ -1,0 +1,13 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: hello-python
+  annotations:
+    run.googleapis.com/ingress: all
+spec:
+  template:
+    spec:
+      containers:
+        - image: asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/hello-python
+          ports:
+            - containerPort: 8080
