@@ -1,27 +1,34 @@
 steps:
-  - name: gcr.io/cloud-builders/docker
-    args:
-      - build
-      - '-t'
-      - 'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/hello-python'
-      - '.'
-  - name: gcr.io/cloud-builders/docker
-    args:
-      - push
-      - 'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/hello-python'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/my-python-service:$SHORT_SHA', '.' ]
 
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/my-python-service:$SHORT_SHA' ]
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: bash
     args:
-      - -c
+      - '-c'
       - |
-        skaffold render --digest-source=tag --output=rendered.yaml --filename=skaffold.yaml
-        skaffold apply --filename=skaffold.yaml
+        mkdir render-output
+        cp cloudrun-service.yaml render-output/
+        sed -i "s|REPLACE_IMAGE|asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/my-python-service:$SHORT_SHA|" render-output/cloudrun-service.yaml
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - deploy
+      - releases
+      - create
+      - release-$BUILD_ID
+      - --delivery-pipeline=cloudrun-python-pipeline
+      - --region=asia-south1
+      - --source=render-output
+      - --skaffold-file=skaffold.yaml
+      - --images=my-python-service=asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/my-python-service:$SHORT_SHA
 
 images:
-  - asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/hello-python
+  - asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/my-python-service:$SHORT_SHA
 
 options:
   logging: CLOUD_LOGGING_ONLY
-
-serviceAccount: 1064351983714-compute@developer.gserviceaccount.com
+serviceAccount: "1064351983714-compute@developer.gserviceaccount.com"
