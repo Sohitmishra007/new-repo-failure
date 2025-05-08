@@ -1,4 +1,4 @@
-apiVersion: skaffold/v2beta29
+apiVersion: skaffold/v4beta6
 kind: Config
 metadata:
   name: hello-python
@@ -13,11 +13,12 @@ deploy:
   cloudrun:
     region: asia-south1
     projectId: enhub-cloud-interns
-    service: hello-python
+    serviceName: hello-python
+
 profiles:
   - name: clouddeploy
     deploy:
       cloudrun:
         region: asia-south1
         projectId: enhub-cloud-interns
-        service: hello-python
+        serviceName: hello-python
