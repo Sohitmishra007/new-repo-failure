@@ -15,3 +15,20 @@ steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
+      - deploy
+      - releases
+      - create
+      - 'release-$BUILD_ID'
+      - '--delivery-pipeline=cloudrun-python-pipeline'
+      - '--region=asia-south1'
+      - '--skaffold-file=skaffold.yaml'
+      - '--source=.'
+      - '--to-target=dev'
+
+images:
+  - 'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/my-app:$SHORT_SHA'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+serviceAccount: 1064351983714-compute@developer.gserviceaccount.com
