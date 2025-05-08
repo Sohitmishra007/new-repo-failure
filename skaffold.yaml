@@ -5,12 +5,8 @@ metadata:
 build:
   artifacts:
     - image: asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/my-app
-
 deploy:
-  googleCloudDeploy:
-    deliveryPipeline: cloudrun-python-pipeline
-    target: dev
+  cloudrun:
     region: asia-south1
-    render:
-      include:
-        - run
+    projectId: enhub-cloud-interns
+    serviceName: my-app
