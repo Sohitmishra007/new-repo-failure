@@ -1,6 +1,8 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
+
 WORKDIR /app
-COPY app.py .
+COPY main.py .
+
 RUN pip install flask
-ENV PORT=8080
-CMD ["python", "app.py"]
+
+CMD ["python", "main.py"]
