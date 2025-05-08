@@ -1,0 +1,7 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: cloudrun-deploy
+build:
+  artifacts:
+    - image: asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/my-app
