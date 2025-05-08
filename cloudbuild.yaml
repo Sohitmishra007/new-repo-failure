@@ -1,17 +1,17 @@
 steps:
+  # Build the image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/my-app:$SHORT_SHA', '.']
 
+  # Push the image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/my-app:$SHORT_SHA']
 
+  # Render deployment manifest using Skaffold
   - name: 'gcr.io/k8s-skaffold/skaffold'
-    args: ['run', '--filename=skaffold.yaml']
+    args: ['render', '--filename=skaffold.yaml', '--output=rendered.yaml']
 
-images:
-  - 'asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/my-app:$SHORT_SHA'
-
-options:
-  logging: CLOUD_LOGGING_ONLY
-
-serviceAccount: 1064351983714-compute@developer.gserviceaccount.com
+  # Deploy using Cloud Deploy
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
