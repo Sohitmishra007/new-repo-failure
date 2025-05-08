@@ -2,11 +2,16 @@ apiVersion: skaffold/v4beta7
 kind: Config
 metadata:
   name: my-python-service
+build:
+  artifacts:
+    - image: asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/my-python-service
+      context: .
+  googleCloudBuild:
+    projectId: enhub-cloud-interns
+
 manifests:
   rawYaml:
-    - cloudrun-service.yaml
+    - service.yaml
+
 deploy:
-  cloudrun:
-    location: asia-south1
-    projectId: enhub-cloud-interns
-    service: my-python-service
+  cloudrun: {}
