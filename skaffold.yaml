@@ -5,20 +5,12 @@ metadata:
 build:
   artifacts:
     - image: asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/hello-python
-  tagPolicy:
-    gitCommit: {}
   googleCloudBuild:
     projectId: enhub-cloud-interns
-deploy:
-  cloudrun:
-    region: asia-south1
-    projectId: enhub-cloud-interns
-    serviceName: hello-python
 
-profiles:
-  - name: clouddeploy
-    deploy:
-      cloudrun:
-        region: asia-south1
-        projectId: enhub-cloud-interns
-        serviceName: hello-python
+manifests:
+  rawYaml:
+    - cloudrun-service.yaml
+
+deploy:
+  cloudrun: {}
