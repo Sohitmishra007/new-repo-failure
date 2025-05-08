@@ -12,7 +12,7 @@ steps:
   entrypoint: gcloud
   args:
     [
-      "deploy", "releases", "create", "release-$_RELEASE_TIMESTAMP",
+      "deploy", "releases", "create", "release-$BUILD_ID",   # ✅ valid ID
       "--delivery-pipeline", "cloudrun-python-pipeline",
       "--region", "asia-south1",
       "--images", "app=asia-south1-docker.pkg.dev/enhub-cloud-interns/my-repo/app:$BUILD_ID"
