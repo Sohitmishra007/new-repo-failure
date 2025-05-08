@@ -4,7 +4,4 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Hello from Cloud Run with CI/CD!"
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    return "Hello from enhub-cloud-interns via Cloud Run and Cloud Deploy!"
