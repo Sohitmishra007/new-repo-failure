@@ -1,18 +1,18 @@
-steps:
-  - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/hello-python:$SHORT_SHA", "."]
-  
-  - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/hello-python:$SHORT_SHA"]
+apiVersion: deploy.cloud.google.com/v1
+kind: DeliveryPipeline
+metadata:
+  name: cloudrun-python-pipeline
+description: Cloud Run deployment for hello-python
+serialPipeline:
+  stages:
+    - targetId: dev
+      profiles: [clouddeploy]
+---
 
-  - name: "gcr.io/k8s-skaffold/skaffold"
-    entrypoint: "skaffold"
-    args: ["run", "--default-repo", "asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app"]
-
-images:
-  - asia-south1-docker.pkg.dev/enhub-cloud-interns/my-app/hello-python
-
-options:
-  logging: CLOUD_LOGGING_ONLY
-
-serviceAccount: "1064351983714-compute@developer.gserviceaccount.com"
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: dev
+description: Dev stage for hello-python Cloud Run
+run:
+  location: asia-south1
