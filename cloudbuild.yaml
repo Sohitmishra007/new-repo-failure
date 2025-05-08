@@ -26,9 +26,7 @@ steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args: [
-      'deploy',
-      'releases',
-      'create', 'release-$BUILD_ID',
+      'deploy', 'releases', 'create', 'release-$BUILD_ID',
       '--delivery-pipeline=cloudrun-python-pipeline',
       '--region=asia-south1',
       '--skaffold-file=skaffold.yaml',
