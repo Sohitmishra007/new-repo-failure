@@ -2,19 +2,29 @@ apiVersion: skaffold/v3alpha1
 kind: Config
 metadata:
   name: cloud-run-app
+
 profiles:
 - name: dev
   manifests:
     rawYaml:
     - deploy-dev.yaml
+  deploy:
+    cloudrun:
+      service: app-dev
+      region: asia-south1
 - name: qa
   manifests:
     rawYaml:
     - deploy-qa.yaml
+  deploy:
+    cloudrun:
+      service: app-qa
+      region: asia-south1
 - name: prod
   manifests:
     rawYaml:
     - deploy-prod.yaml
-
-deploy:
-  cloudrun: {}
+  deploy:
+    cloudrun:
+      service: app-prod
+      region: asia-south1
