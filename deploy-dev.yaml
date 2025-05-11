@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-      - image: app
+      - image: app  # This is the placeholder Cloud Deploy replaces
         resources:
           limits:
             cpu: 1000m
