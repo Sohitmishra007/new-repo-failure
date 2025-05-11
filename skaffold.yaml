@@ -12,6 +12,7 @@ profiles:
     cloudrun:
       service: app-dev
       region: asia-south1
+
 - name: qa
   manifests:
     rawYaml:
@@ -20,6 +21,7 @@ profiles:
     cloudrun:
       service: app-qa
       region: asia-south1
+
 - name: prod
   manifests:
     rawYaml:
