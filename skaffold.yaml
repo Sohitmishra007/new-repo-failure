@@ -1,7 +1,11 @@
 apiVersion: skaffold/v3alpha1
 kind: Config
-metadata:
+metadata: 
   name: cloud-run-app
+
+build:
+  artifacts:
+  - image: asia-south1-docker.pkg.dev/onyx-antler-459216-j6/my-repo/app
 
 profiles:
 - name: dev
@@ -10,7 +14,7 @@ profiles:
     - deploy-dev.yaml
   deploy:
     cloudrun:
-      serviceName: app-dev
+      service: cloudrun-python-pipeline-dev
       region: asia-south1
 
 - name: qa
@@ -19,7 +23,7 @@ profiles:
     - deploy-qa.yaml
   deploy:
     cloudrun:
-      serviceName: app-qa
+      service: cloudrun-python-pipeline-qa
       region: asia-south1
 
 - name: prod
@@ -28,5 +32,5 @@ profiles:
     - deploy-prod.yaml
   deploy:
     cloudrun:
-      serviceName: app-prod
+      service: cloudrun-python-pipeline-prod
       region: asia-south1
