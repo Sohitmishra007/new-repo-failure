@@ -6,4 +6,8 @@ spec:
   template:
     spec:
       containers:
-      - image: app
+      - image: app  # Placeholder replaced during render
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 128Mi
