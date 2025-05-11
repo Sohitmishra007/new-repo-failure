@@ -6,4 +6,5 @@ spec:
   template:
     spec:
       containers:
-      - image: asia-south1-docker.pkg.dev/onyx-antler-459216-j6/my-repo/app:${_BUILD_ID}
+      - image: asia-south1-docker.pkg.dev/onyx-antler-459216-j6/my-repo/app
+
