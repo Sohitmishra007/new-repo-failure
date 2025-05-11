@@ -10,7 +10,7 @@ profiles:
     - deploy-dev.yaml
   deploy:
     cloudrun:
-      service: app-dev
+      serviceName: app-dev
       region: asia-south1
 
 - name: qa
@@ -19,7 +19,7 @@ profiles:
     - deploy-qa.yaml
   deploy:
     cloudrun:
-      service: app-qa
+      serviceName: app-qa
       region: asia-south1
 
 - name: prod
@@ -28,5 +28,5 @@ profiles:
     - deploy-prod.yaml
   deploy:
     cloudrun:
-      service: app-prod
+      serviceName: app-prod
       region: asia-south1
