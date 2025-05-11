@@ -11,7 +11,7 @@ steps:
     ]
   id: Build and package app
 
-# Step 2: Apply Cloud Deploy resources (pipeline + targets)
+# Step 2: Apply Cloud Deploy pipeline and targets
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
   entrypoint: 'gcloud'
   args:
@@ -38,7 +38,7 @@ steps:
   entrypoint: 'gcloud'
   args:
     [
-      'deploy', 'releases', 'create', 'rel-${_BUILD_ID}',
+      'deploy', 'releases', 'create', '${_BUILD_ID}',
       '--delivery-pipeline', 'cloudrun-python-pipeline',
       '--region', '${_REGION}',
       '--images', 'app=asia-south1-docker.pkg.dev/onyx-antler-459216-j6/my-repo/app:${_BUILD_ID}',
