@@ -5,17 +5,17 @@ metadata:
 description: Cloud Run pipeline for Python app
 serialPipeline:
   stages:
-    - targetId: dev-env
+    - targetId: dev
       profiles: [dev]
-    - targetId: qa-env
+    - targetId: qa
       profiles: [qa]
-    - targetId: prod-env
+    - targetId: prod
       profiles: [prod]
 ---
 apiVersion: deploy.cloud.google.com/v1
 kind: Target
 metadata:
-  name: dev-env
+  name: dev
 description: Cloud Run dev environment
 run:
   location: projects/onyx-antler-459216-j6/locations/asia-south1
@@ -23,7 +23,7 @@ run:
 apiVersion: deploy.cloud.google.com/v1
 kind: Target
 metadata:
-  name: qa-env
+  name: qa
 description: Cloud Run QA environment
 run:
   location: projects/onyx-antler-459216-j6/locations/asia-south1
@@ -31,7 +31,7 @@ run:
 apiVersion: deploy.cloud.google.com/v1
 kind: Target
 metadata:
-  name: prod-env
+  name: prod
 description: Cloud Run prod environment
 run:
   location: projects/onyx-antler-459216-j6/locations/asia-south1
