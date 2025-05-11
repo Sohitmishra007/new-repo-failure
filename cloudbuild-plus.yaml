@@ -1,0 +1,29 @@
+steps:
+# Step 1: Build and publish the image using Buildpacks
+- name: 'gcr.io/k8s-skaffold/pack'
+  entrypoint: 'pack'
+  args: [
+    'build',
+    '--builder=gcr.io/buildpacks/builder',
+    '--publish',
+    '${_REGION}-docker.pkg.dev/${PROJECT_ID}/containers-repo/app:${_RELEASE_TIMESTAMP}'
+  ]
+  id: Build and package .NET app
+
+# Step 2: Create a Cloud Deploy release
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+  entrypoint: 'gcloud'
+  args: [
+    'deploy', 'releases', 'create', 'release-${_RELEASE_TIMESTAMP}',
+    '--delivery-pipeline', 'cloud-run-pipeline',
+    '--region', '${_REGION}',
+    '--images', 'app=${_REGION}-docker.pkg.dev/${PROJECT_ID}/containers-repo/app:${_RELEASE_TIMESTAMP}'
+  ]
+  id: Create Cloud Deploy release
+
+substitutions:
+  _REGION: asia-south1
+  _RELEASE_TIMESTAMP: "manual-release"  # Will be overridden by command line usually
+
+options:
+  logging: CLOUD_LOGGING_ONLY
