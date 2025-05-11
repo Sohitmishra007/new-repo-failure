@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-      - image: asia-south1-docker.pkg.dev/onyx-antler-459216-j6/my-repo/app
+      - image: app
         resources:
           limits:
             cpu: 1000m
