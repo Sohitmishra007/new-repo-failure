@@ -1,6 +1,6 @@
 apiVersion: skaffold/v3alpha1
 kind: Config
-metadata: 
+metadata:
   name: cloud-run-app
 
 build:
@@ -14,7 +14,6 @@ profiles:
     - deploy-dev.yaml
   deploy:
     cloudrun:
-      service: cloudrun-python-pipeline-dev
       region: asia-south1
 
 - name: qa
@@ -23,7 +22,6 @@ profiles:
     - deploy-qa.yaml
   deploy:
     cloudrun:
-      service: cloudrun-python-pipeline-qa
       region: asia-south1
 
 - name: prod
@@ -32,5 +30,4 @@ profiles:
     - deploy-prod.yaml
   deploy:
     cloudrun:
-      service: cloudrun-python-pipeline-prod
       region: asia-south1
