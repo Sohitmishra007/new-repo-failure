@@ -7,7 +7,7 @@ steps:
       'build',
       '--builder=gcr.io/buildpacks/builder',
       '--publish',
-      'asia-south1-docker.pkg.dev/onyx-antler-459216-j6/my-repo/app:${_BUILD_ID}'
+      'asia-south1-docker.pkg.dev/testing-practice-org/my-repo/app:${_BUILD_ID}' # Corrected Project ID
     ]
   id: Build and package app
 
@@ -19,7 +19,7 @@ steps:
       "deploy", "apply",
       "--file=clouddeploy.yaml",
       "--region=${_REGION}",
-      "--project=onyx-antler-459216-j6"
+      "--project=testing-practice-org" # Corrected Project ID
     ]
   id: Apply deploy config
 
@@ -41,8 +41,8 @@ steps:
       'deploy', 'releases', 'create', '${_BUILD_ID}',
       '--delivery-pipeline', 'cloudrun-python-pipeline',
       '--region', '${_REGION}',
-      '--images', 'app=asia-south1-docker.pkg.dev/onyx-antler-459216-j6/my-repo/app:${_BUILD_ID}',
-      '--project=onyx-antler-459216-j6'
+      '--images', 'app=asia-south1-docker.pkg.dev/testing-practice-org/my-repo/app:${_BUILD_ID}', # Corrected Project ID
+      '--project=testing-practice-org' # Corrected Project ID
     ]
   id: Create release
 
@@ -50,7 +50,7 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 substitutions:
-  _REGION: asia-south1
+  _REGION: asia-south1 # Keeping this as asia-south1 for now, but confirm your clouddeploy.yaml target region.
   _BUILD_ID: rel-20240511-011
 
 serviceAccount: cloudbuild-sa@testing-practice-org.iam.gserviceaccount.com
