@@ -5,7 +5,7 @@ metadata:
 
 build:
   artifacts:
-  - image: asia-south1-docker.pkg.dev/onyx-antler-459216-j6/my-repo/app
+  - image: asia-south1-docker.pkg.dev/testing-practice-org/my-repo
 
 profiles:
 - name: dev
